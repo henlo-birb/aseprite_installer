@@ -1,5 +1,6 @@
 # aseprite_installer
 python script that downloads, compiles, and "installs" (creates desktop file) aseprite on linux
+<br>
 Requires at least Python 3.5
 
 ```
