@@ -15,7 +15,7 @@ parser.add_argument("--skia-path", default="$HOME/deps/skia",
                     help="absolute path to place or read aseprite folder. e.g. setting \"--skia-path $HOME\" will set the aseprite folder to \"$HOME/skia\"")
 parser.add_argument("--dont-build", action="store_true",
                     help="do all the other stuff but don't build")
-args = parser.parse_args()
+args, unknown = parser.parse_known_args()
 
 build = "" if args.dont_build else '''
 echo "\nBuilding\n"
@@ -39,7 +39,7 @@ if install_deps:
 
 if not ["skia"] in args.local:
     release_data = json.loads(subprocess.run(
-        ["curl", "-s", "https://api.github.com/repos/aseprite/skia/releases/latest"], capture_output=True).stdout)
+        ["curl", "-s", "https://api.github.com/repos/aseprite/skia/releases/latest"], stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout)
     download_url = next(asset["browser_download_url"]
                         for asset in release_data["assets"] if asset["name"] == "Skia-Linux-Release-x64.zip")
     skia = '''
