@@ -22,7 +22,7 @@ echo "\nBuilding\n"
 sudo ninja aseprite
 '''
 try:
-    deb_deps = " ".join([dep for dep in ["git", "g++", "cmake", "ninja-build", "libx11-dev", "libxcursor-dev", "libgl1-mesa-dev", "libfontconfig1-dev", "unzip"]
+    deb_deps = " ".join([dep for dep in ["git", "g++", "cmake", "ninja-build", "libx11-dev", "libxcursor-dev", "libgl1-mesa-dev", "libfontconfig1-dev", "unzip", "xorg-dev"]
                      if subprocess.run(["dpkg", "-V", dep]).returncode])
 except:
     deb_deps = None
