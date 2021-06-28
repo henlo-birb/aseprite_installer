@@ -15,7 +15,29 @@ parser.add_argument("--skia-path", default="$HOME/deps/skia",
                     help="absolute path to place or read aseprite folder. e.g. setting \"--skia-path $HOME\" will set the aseprite folder to \"$HOME/skia\"")
 parser.add_argument("--dont-build", action="store_true",
                     help="do all the other stuff but don't build")
+parser.add_argument("--just-desktop", "-d", action="store_true", help="only generate desktop file")
 args, unknown = parser.parse_known_args()
+
+source_path = args.source_path if args.source_path else "/opt/%saseprite/" % (
+    "fedora/" if os.path.exists("/opt/fedora") else "")
+build_dir = source_path + "/build"
+
+desktop_file = '''
+desktopfile="[Desktop Entry]
+Name=Aseprite
+Comment=Pixel art and animation tool
+Exec={build_dir}/bin/aseprite
+Icon=aseprite
+Categories=Graphics"
+
+sudo echo "$desktopfile" > /usr/share/applications/aseprite.desktop
+echo "Done!"
+'''.format(build_dir=build_dir)
+
+os.system(desktop_file)
+
+if args.just_desktop: quit()
+
 
 build = "" if args.dont_build else '''
 echo "\nBuilding\n"
@@ -53,9 +75,7 @@ if not ["skia"] in args.local:
     '''.format(skia_path=args.skia_path, url=download_url)
 else:
     skia = ""
-source_path = args.source_path if args.source_path else "/opt/%saseprite/" % (
-    "fedora/" if os.path.exists("/opt/fedora") else "")
-build_dir = source_path + "/build"
+
 
 if not ["source"] in args.local:
     if args.update:
@@ -73,6 +93,8 @@ if not ["source"] in args.local:
 else:
     git = ""
 
+
+
 commands = '''
 {install_deps}
 {skia}
@@ -89,16 +111,6 @@ sudo cmake \
   -G Ninja \
   ..
 {build}
-
-desktopfile="[Desktop Entry]
-Name=Aseprite
-Comment=Pixel art and animation tool
-Exec={build_dir}/bin/aseprite
-Icon=aseprite
-Categories=Graphics"
-
-sudo echo "$desktopfile" > /usr/share/applications/aseprite.desktop
-echo "Done!"
 '''.format(build=build, build_dir=build_dir, git=git, install_deps=install_deps, skia=skia, skia_path=args.skia_path)
 
 # print(commands)
