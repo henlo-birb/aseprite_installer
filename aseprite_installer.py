@@ -31,7 +31,6 @@ Icon=aseprite
 Categories=Graphics"
 
 sudo echo "$desktopfile" > /usr/share/applications/aseprite.desktop
-echo "Done!"
 '''.format(build_dir=build_dir)
 
 os.system(desktop_file)
@@ -111,6 +110,7 @@ sudo cmake \
   -G Ninja \
   ..
 {build}
+echo "Done!"
 '''.format(build=build, build_dir=build_dir, git=git, install_deps=install_deps, skia=skia, skia_path=args.skia_path)
 
 # print(commands)
