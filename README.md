@@ -30,8 +30,8 @@ OPTIONS
               $HOME" will set the aseprite folder to "$HOME/aseprite"
 
        --skia-path SKIA_PATH
-              absolute  path  to  place  or read aseprite folder. e.g. setting
-              "--skia-path $HOME" will set the aseprite folder to "$HOME/skia"
+              absolute  path  to  place  or read skia folder. e.g. setting
+              "--skia-path $HOME" will set the skia folder to "$HOME/skia"
 
        --dont-build
               do all the other stuff but don't build
