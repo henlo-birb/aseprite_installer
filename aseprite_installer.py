@@ -20,22 +20,25 @@ args, unknown = parser.parse_known_args()
 
 source_path = args.source_path if args.source_path else "/opt/%saseprite/" % (
     "fedora/" if os.path.exists("/opt/fedora") else "")
-build_dir = source_path + "/build"
+build_dir = source_path + "build"
 
 desktop_file = '''
 desktopfile="[Desktop Entry]
 Name=Aseprite
 Comment=Pixel art and animation tool
 Exec={build_dir}/bin/aseprite
-Icon=aseprite
+Icon=/opt/aseprite/build/bin/data/icons/ase.ico
 Type=Application
 Categories=Graphics"
 
 sudo echo "$desktopfile" > /usr/share/applications/aseprite.desktop
+echo created desktop file
 '''.format(build_dir=build_dir)
 
-os.system(desktop_file)
-
+if os.path.exists("/usr/share/applications/aseprite.desktop"):
+    os.system(desktop_file)
+else:
+    print("Desktop file exists! Not creating one")
 if args.just_desktop: quit()
 
 
