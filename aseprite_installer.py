@@ -28,6 +28,7 @@ Name=Aseprite
 Comment=Pixel art and animation tool
 Exec={build_dir}/bin/aseprite
 Icon=aseprite
+Type=Application
 Categories=Graphics"
 
 sudo echo "$desktopfile" > /usr/share/applications/aseprite.desktop
